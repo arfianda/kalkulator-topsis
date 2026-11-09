@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator TOPSIS // Papan Tulis Keputusan &amp; Rumus Kapur</title>
+  <meta name="description"
+    content="Kalkulator interaktif metode TOPSIS (Technique for Order of Preference by Similarity to Ideal Solution) dengan pendekatan papan tulis analitik akademis.">
+
+  <!-- Google Fonts: Source Serif 4 & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="blackboard-bg">
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="nav-container">
+      <div class="brand-badge">
+        <div class="brand-icon">∑</div>
+        <div class="brand-text">
+          <span>TOPSIS</span>
+          <span class="brand-sub">// Papan Tulis Keputusan</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" aria-label="Navigasi Utama">
+        <button type="button" class="nav-tab-btn active" data-tab="tab-kalkulator" id="nav-btn-kalkulator">
+          <span class="material-symbols-outlined" style="font-size:18px;">grid_view</span>
+          Kalkulator Matriks
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="tab-penjelasan" id="nav-btn-penjelasan">
+          <span class="material-symbols-outlined" style="font-size:18px;">menu_book</span>
+          Penjelasan &amp; Rumus Langkah
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="tab-riwayat" id="nav-btn-riwayat">
+          <span class="material-symbols-outlined" style="font-size:18px;">history</span>
+          Riwayat Perhitungan
+        </button>
+        <button type="button" class="nav-tab-btn" data-tab="tab-ekspor" id="nav-btn-ekspor">
+          <span class="material-symbols-outlined" style="font-size:18px;">download</span>
+          Ekspor Hasil
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="btn-open-help" title="Panduan Penggunaan">
+          <span class="material-symbols-outlined" style="font-size:16px;">help</span>
+          Panduan
+        </button>
+        <button type="button" class="btn btn-danger btn-sm" id="btn-header-reset" title="Hapus dan Reset Data">
+          <span class="material-symbols-outlined" style="font-size:16px;">backspace</span>
+          Penghapus
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="main-wrapper">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: KALKULATOR MATRIKS (ACTIVE BY DEFAULT) -->
+    <!-- ========================================== -->
+    <div id="tab-kalkulator" class="tab-pane active">
+
+      <!-- Academic Hero Section -->
+      <section class="academic-hero">
+        <div class="hero-meta">
+          <span class="meta-chip">Sistem Pendukung Keputusan</span>
+          <span>//</span>
+          <span>Metode TOPSIS (Hwang &amp; Yoon 1981)</span>
+        </div>
+
+        <div class="hero-main">
+          <div class="hero-title-group">
+            <h1>Kalkulator Papan Tulis TOPSIS</h1>
+            <p class="hero-subtitle">
+              Alat analisis multi-kriteria presisi tinggi: Kalibrasi bobot kriteria, isi matriks nilai keputusan, dan
+              peroleh rangking alternatif terbaik berdasarkan kedekatan geometris terhadap solusi ideal.
+            </p>
+          </div>
+
+          <div class="hero-toolbar">
+            <button type="button" class="btn btn-secondary" id="btn-add-crit">
+              <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+              + Kriteria
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-add-alt">
+              <span class="material-symbols-outlined" style="font-size:16px;">person_add</span>
+              + Alternatif
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-auto-normalize"
+              title="Sesuaikan nilai bobot agar total berjumlah 1.00">
+              <span class="material-symbols-outlined" style="font-size:16px;">balance</span>
+              Normalisasi Bobot (∑W=1)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- LANGKAH 0: PILIH TEMPLATE STUDI KASUS -->
+      <section class="section-block" style="border: 2px solid var(--chalk-white); margin-bottom: 2rem;">
+        <div class="section-header" style="background-color: var(--panel-slate-highest);">
+          <div class="section-header-title">
+            <span class="section-number" style="background-color: var(--chalk-white); color: #000;">LANGKAH 0</span>
+            <h2 class="section-title-text">Pilih Template Kasus Terlebih Dahulu</h2>
+          </div>
+          <span class="meta-chip">Template Aktif: <strong id="active-template-badge"
+              style="color:var(--chalk-white);">Pemilihan Laptop</strong></span>
+        </div>
+        <div class="section-body">
+          <p style="font-size:0.8125rem; color:var(--chalk-secondary); margin-bottom:1rem;">
+            Silakan pilih template studi kasus di bawah. Sistem akan memuat kriteria, bobot, dan matriks alternatif
+            secara otomatis sesuai skenario yang dipilih:
+          </p>
+          <div class="template-selector-grid" id="template-cards-container">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+      </section>
+
+      <!-- TAHAP 1: KRITERIA & BOBOT -->
+      <section class="section-block">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">TAHAP 01</span>
+            <h2 class="section-title-text">Kalibrasi Kriteria &amp; Bobot Preferensi (W)</h2>
+          </div>
+          <div id="weight-sum-badge" class="weight-indicator">
+            <span class="meta-chip" id="weight-sum-text">Total Bobot: 1.00</span>
+          </div>
+        </div>
+
+        <div class="section-body">
+          <!-- Weight Mode Switch Bar -->
+          <div class="weight-mode-switch-bar">
+            <div style="display:flex; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+              <span
+                style="font-size:0.75rem; text-transform:uppercase; color:var(--chalk-secondary); font-weight:600;">Metode
+                Input Bobot:</span>
+              <div class="btn-group" style="display:inline-flex; gap:0.25rem;">
+                <button type="button" class="btn btn-sm btn-primary" id="btn-mode-point" data-weight-mode="point">
+                  <span class="material-symbols-outlined" style="font-size:14px;">pin</span>
+                  Metode 100 Poin
+                </button>
+                <button type="button" class="btn btn-sm btn-outline" id="btn-mode-decimal" data-weight-mode="decimal">
+                  <span class="material-symbols-outlined" style="font-size:14px;">decimal_increase</span>
+                  Mode Desimal (0.00 - 1.00)
+                </button>
+              </div>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-open-weight-presentation">
+              <span class="material-symbols-outlined" style="font-size:16px;">menu_book</span>
+              Panduan Bobot: Aturan &amp; Penanganan Total Bobot ≠ 1
+            </button>
+          </div>
+
+          <!-- Benefit vs Cost Concept Box -->
+          <div class="guide-box">
+            <div class="guide-item">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--benefit-color); flex-shrink:0;">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+              <div>
+                <div class="guide-item-title" style="color:var(--benefit-color);">[+] BENEFIT (Keuntungan)</div>
+                <div class="guide-item-desc">Semakin BESAR nilainya, semakin BAGUS. Contoh: RAM, Kapasitas Baterai,
+                  Disiplin, Nilai tes.</div>
+              </div>
+            </div>
+            <div class="guide-item">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cost-color); flex-shrink:0;">
+                <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                <polyline points="17 18 23 18 23 12"></polyline>
+              </svg>
+              <div>
+                <div class="guide-item-title" style="color:var(--cost-color);">[-] COST (Biaya / Beban)</div>
+                <div class="guide-item-desc">Semakin KECIL nilainya, semakin MENGUNTUNGKAN. Contoh: Harga beli, Waktu
+                  pengiriman, Komplain pelanggan.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weight Warning Callout (Kasus A: Lebih dari 1 / Kasus B: Kurang dari 1) -->
+          <div id="weight-warning-callout" class="weight-warning-callout" style="display:none;">
+            <!-- Injected by JavaScript when sum != 1 -->
+          </div>
+
+          <!-- Criteria Cards Grid -->
+          <div class="criteria-grid" id="criteria-container">
+            <!-- Injected by JavaScript -->
+          </div>
+
+          <!-- Weight Balance Info -->
+          <div class="weight-balance-bar">
+            <div>
+              <span style="color:var(--chalk-secondary);">Aturan Standar Bobot:</span>
+              <span>Total seluruh bobot harus sama dengan 1 (∑ W_j = 1) agar terbaca sebagai persentase
+                kepentingan.</span>
+            </div>
+            <button type="button" class="btn btn-outline btn-sm" id="btn-quick-normalize">
+              Normalisasikan Otomatis (w_j ÷ ∑w)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAHAP 2: MATRIKS KEPUTUSAN X -->
+      <section class="section-block">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">TAHAP 02</span>
+            <h2 class="section-title-text">Matriks Keputusan Alternatif (X)</h2>
+          </div>
+          <span style="font-size:0.75rem; color:var(--chalk-secondary);">Input nilai riil setiap alternatif pada kolom
+            kriteria terkait</span>
+        </div>
+
+        <div class="section-body">
+          <div class="table-responsive">
+            <table class="blackboard-table" id="matrix-table">
+              <thead>
+                <tr id="matrix-head-row">
+                  <!-- Injected by JavaScript -->
+                </tr>
+              </thead>
+              <tbody id="matrix-body-rows">
+                <!-- Injected by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Execution Bar -->
+          <div
+            style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:1rem; margin-top:1.5rem;">
+            <button type="button" class="btn btn-primary btn-lg" id="btn-run-topsis">
+              <span class="material-symbols-outlined" style="font-size:20px;">functions</span>
+              Jalankan Analisis TOPSIS (Solve with Chalk)
+            </button>
+            <div style="display:flex; align-items:center; gap:1rem; font-size:0.8125rem; color:var(--chalk-secondary);">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-save-snapshot">
+                <span class="material-symbols-outlined" style="font-size:16px;">save</span>
+                Simpan Snapshot ke Riwayat
+              </button>
+              <span>Matriks diperbarui otomatis secara langsung (Live sync)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAHAP 3: HASIL PERANGKINGAN AKHIR -->
+      <section class="section-block" id="section-ranking">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">TAHAP 03</span>
+            <h2 class="section-title-text">Peringkat Akhir &amp; Rekomendasi Solusi</h2>
+          </div>
+          <span class="meta-chip" id="ranking-status-chip">STATUS: HASIL TERKALKULASI</span>
+        </div>
+
+        <div class="section-body">
+          <!-- Spotlight Winner Card -->
+          <div class="winner-card" id="winner-spotlight">
+            <div class="winner-info">
+              <div class="winner-trophy">★</div>
+              <div class="winner-details">
+                <div
+                  style="font-size:0.75rem; color:var(--chalk-secondary); text-transform:uppercase; letter-spacing:0.06em;">
+                  Rekomendasi Pilihan Teratas (Juara 1)</div>
+                <h3 id="winner-name">Alternatif Terpilih</h3>
+                <p id="winner-reason">Memiliki rasio kedekatan tertinggi terhadap solusi ideal positif (A+).</p>
+              </div>
+            </div>
+            <div class="winner-stats">
+              <div class="stat-pill">
+                <div class="stat-label">Skor Preferensi (V)</div>
+                <div class="stat-value" id="winner-score">0.0000</div>
+              </div>
+              <div class="stat-pill">
+                <div class="stat-label">Persentase Kedekatan</div>
+                <div class="stat-value" id="winner-pct">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ranking Table -->
+          <div class="table-responsive">
+            <table class="blackboard-table">
+              <thead>
+                <tr>
+                  <th style="width:90px;" class="text-center">Peringkat</th>
+                  <th style="width:70px;">Kode</th>
+                  <th style="min-width:200px;">Nama Alternatif</th>
+                  <th class="text-right" title="Jarak Euclidean ke Solusi Ideal Positif">Jarak Ideal (+) D+</th>
+                  <th class="text-right" title="Jarak Euclidean ke Solusi Ideal Negatif">Jarak Ideal (-) D-</th>
+                  <th class="text-right" style="min-width:140px;">Nilai Preferensi (V)</th>
+                  <th style="min-width:180px;">Rasio Kedekatan Visual</th>
+                  <th class="text-center">Status Keputusan</th>
+                </tr>
+              </thead>
+              <tbody id="ranking-table-body">
+                <!-- Injected by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Sensitivity Simulation Tool -->
+          <div class="sensitivity-panel" style="margin-top:1.5rem;">
+            <div
+              style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; border-bottom:1px dashed var(--chalk-border); padding-bottom:0.75rem;">
+              <div>
+                <strong style="color:var(--chalk-white); font-size:0.875rem;">Simulasi Sensitivitas Bobot Kriteria
+                  (What-If Analysis)</strong>
+                <p style="font-size:0.75rem; color:var(--chalk-secondary);">Geser tuas bobot kriteria untuk melihat
+                  perubahan peringkat alternatif secara langsung.</p>
+              </div>
+              <button type="button" class="btn btn-outline btn-sm" id="btn-reset-sensitivity">
+                Kembalikan Bobot Awal
+              </button>
+            </div>
+            <div class="slider-group" id="sensitivity-sliders-container">
+              <!-- Injected by JavaScript -->
+            </div>
+          </div>
+
+
+        </div>
+      </section>
+
+      <!-- RINCIAN LANGKAH KOMPUTASI (ACCORDION) -->
+      <section class="section-block">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">AUDIT</span>
+            <h2 class="section-title-text">Rincian Matriks Komputasi Lengkap (Langkah 01 - 05)</h2>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-all-steps">
+            Buka / Tutup Semua Langkah
+          </button>
+        </div>
+
+        <div class="section-body">
+
+          <!-- Langkah 1: Normalisasi R -->
+          <div class="step-accordion">
+            <button type="button" class="step-accordion-header" data-step="step-1">
+              <div class="step-header-left">
+                <span class="step-header-tag">LANGKAH 01</span>
+                <span>Matriks Keputusan Ternormalisasi (R)</span>
+              </div>
+              <span class="material-symbols-outlined step-arrow">expand_more</span>
+            </button>
+            <div class="step-accordion-content" id="step-1">
+              <div class="formula-display-box">
+                <strong>Rumus Normalisasi Euclidean:</strong> r_ij = x_ij / √(∑ x_kj²)<br>
+                Setiap nilai elemen x_ij dibagi dengan akar kuadrat dari total penjumlahan kuadrat kolom kriteria
+                bersangkutan.
+              </div>
+              <div id="step-1-divisors" style="margin-bottom:1rem; font-size:0.75rem; color:var(--chalk-secondary);">
+              </div>
+              <div class="table-responsive">
+                <table class="blackboard-table">
+                  <thead>
+                    <tr id="step-1-head"></tr>
+                  </thead>
+                  <tbody id="step-1-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 2: Ternormalisasi Terbobot Y -->
+          <div class="step-accordion">
+            <button type="button" class="step-accordion-header" data-step="step-2">
+              <div class="step-header-left">
+                <span class="step-header-tag">LANGKAH 02</span>
+                <span>Matriks Ternormalisasi Terbobot (Y)</span>
+              </div>
+              <span class="material-symbols-outlined step-arrow">expand_more</span>
+            </button>
+            <div class="step-accordion-content" id="step-2">
+              <div class="formula-display-box">
+                <strong>Rumus Matriks Terbobot:</strong> y_ij = w_j · r_ij<br>
+                Elemen matriks ternormalisasi (r_ij) dikalikan dengan bobot kriteria terkalibrasi (w_j).
+              </div>
+              <div class="table-responsive">
+                <table class="blackboard-table">
+                  <thead>
+                    <tr id="step-2-head"></tr>
+                  </thead>
+                  <tbody id="step-2-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 3: Solusi Ideal Positif & Negatif -->
+          <div class="step-accordion">
+            <button type="button" class="step-accordion-header" data-step="step-3">
+              <div class="step-header-left">
+                <span class="step-header-tag">LANGKAH 03</span>
+                <span>Solusi Ideal Positif (A+) &amp; Solusi Ideal Negatif (A-)</span>
+              </div>
+              <span class="material-symbols-outlined step-arrow">expand_more</span>
+            </button>
+            <div class="step-accordion-content" id="step-3">
+              <div class="formula-display-box">
+                <strong>Ketentuan Solusi Ideal:</strong><br>
+                Jika Kriteria Benefit: y_j^+ = max(y_ij), y_j^- = min(y_ij)<br>
+                Jika Kriteria Cost: y_j^+ = min(y_ij), y_j^- = max(y_ij)
+              </div>
+              <div class="table-responsive">
+                <table class="blackboard-table">
+                  <thead>
+                    <tr id="step-3-head"></tr>
+                  </thead>
+                  <tbody id="step-3-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Langkah 4 & 5: Jarak Euclidean & Nilai Preferensi -->
+          <div class="step-accordion">
+            <button type="button" class="step-accordion-header" data-step="step-4">
+              <div class="step-header-left">
+                <span class="step-header-tag">LANGKAH 04 &amp; 05</span>
+                <span>Jarak Euclidean (D+, D-) &amp; Nilai Preferensi Relatif (V)</span>
+              </div>
+              <span class="material-symbols-outlined step-arrow">expand_more</span>
+            </button>
+            <div class="step-accordion-content" id="step-4">
+              <div class="formula-display-box">
+                <strong>Rumus Jarak Euclidean:</strong><br>
+                D_i^+ = √(∑ (y_ij - y_j^+)²)<br>
+                D_i^- = √(∑ (y_ij - y_j^-)²)<br>
+                <strong>Rumus Nilai Preferensi Relatif:</strong> V_i = D_i^- / (D_i^+ + D_i^-)
+              </div>
+              <div class="table-responsive">
+                <table class="blackboard-table">
+                  <thead>
+                    <tr>
+                      <th>Alternatif</th>
+                      <th class="text-right">Jarak Solusi Positif (D+)</th>
+                      <th class="text-right">Jarak Solusi Negatif (D-)</th>
+                      <th class="text-right">Nilai Preferensi (V)</th>
+                      <th>Visualisasi Kedekatan</th>
+                    </tr>
+                  </thead>
+                  <tbody id="step-4-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: PENJELASAN & RUMUS LANGKAH -->
+    <!-- ========================================== -->
+    <div id="tab-penjelasan" class="tab-pane" style="display:none;">
+
+      <section class="academic-hero">
+        <div class="hero-meta">
+          <span class="meta-chip">Teori Matematika Keputusan</span>
+          <span>//</span>
+          <span>Fondasi Ilmiah &amp; Derivasi Matriks</span>
+        </div>
+        <div class="hero-title-group">
+          <h1>Penjelasan &amp; Rumus Langkah Metode TOPSIS</h1>
+          <p class="hero-subtitle">
+            Pahami logika matematis di balik pengambilan keputusan multi-kriteria (MCDM) metode TOPSIS, dikembangkan
+            pertama kali oleh Ching-Lai Hwang dan Kwangsun Yoon pada tahun 1981.
+          </p>
+        </div>
+      </section>
+
+      <article class="theory-chapter">
+        <h2 class="theory-title">Prinsip Dasar Konseptual TOPSIS</h2>
+        <p class="theory-intro">
+          Metode TOPSIS didasarkan pada konsep bahwa alternatif pilihan terbaik tidak hanya harus memiliki jarak
+          geometris terpendek dari <strong>Solusi Ideal Positif (PIS / A+)</strong>, tetapi juga harus memiliki jarak
+          terjauh dari <strong>Solusi Ideal Negatif (NIS / A-)</strong>.
+        </p>
+
+        <div class="theorem-quote-box">
+          "The chosen alternative should have the shortest geometric distance from the positive ideal solution and the
+          longest geometric distance from the negative ideal solution in an Euclidean space." (Hwang &amp; Yoon, 1981)
+        </div>
+
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Langkah 1: Matriks Keputusan Ternormalisasi (R)</span>
+            <span class="meta-chip">Normalisasi Euclidean</span>
+          </div>
+          <p class="math-desc">
+            Setiap kriteria seringkali memiliki skala satuan yang berbeda-beda (misalnya harga dalam jutaan rupiah,
+            bobot dalam kilogram, nilai tes dalam skala 1-100). Normalisasi vektor Euclidean mengubah semua elemen
+            menjadi nilai tanpa satuan dalam interval [0, 1].
+          </p>
+          <div class="math-formula">
+            r_ij = x_ij / √( ∑_{k=1}^m (x_kj)^2 )
+          </div>
+          <p class="math-desc">
+            Keterangan: x_ij adalah nilai kinerja alternatif ke-i pada kriteria ke-j. Nilai pembagi diperoleh dari akar
+            kuadrat jumlah kuadrat seluruh nilai alternatif pada kriteria tersebut.
+          </p>
+        </div>
+
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Langkah 2: Matriks Ternormalisasi Terbobot (Y)</span>
+            <span class="meta-chip">Pembobotan Vektor</span>
+          </div>
+          <p class="math-desc">
+            Setelah elemen ternormalisasi, setiap kolom dikalikan dengan bobot preferensi (w_j) masing-masing kriteria.
+            Total seluruh bobot w_j idealnya bernilai 1.00 (∑ w_j = 1).
+          </p>
+          <div class="math-formula">
+            y_ij = w_j · r_ij
+          </div>
+          <p class="math-desc">
+            Matriks Y merefleksikan nilai kepentingan relatif setiap atribut terhadap alternatif yang dievaluasi.
+          </p>
+        </div>
+
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Langkah 3: Solusi Ideal Positif (A+) &amp; Solusi Ideal Negatif (A-)</span>
+            <span class="meta-chip">Pembedaan Benefit vs Cost</span>
+          </div>
+          <p class="math-desc">
+            Solusi ideal ditentukan berdasarkan karakteristik masing-masing kriteria:
+          </p>
+          <div class="math-formula">
+            A+ = { y_1^+, y_2^+, ..., y_n^+ }<br>
+            dimana y_j^+ = max(y_ij) jika j kriteria BENEFIT, dan min(y_ij) jika j kriteria COST.<br><br>
+            A- = { y_1^-, y_2^-, ..., y_n^- }<br>
+            dimana y_j^- = min(y_ij) jika j kriteria BENEFIT, dan max(y_ij) jika j kriteria COST.
+          </div>
+          <p class="math-desc">
+            A+ mewakili kondisi paling sempurna yang didambakan, sedangkan A- mewakili kondisi paling buruk yang ingin
+            dihindari.
+          </p>
+        </div>
+
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Langkah 4: Jarak Euclidean ke Solusi Ideal</span>
+            <span class="meta-chip">Metrik Ruang Euclidean</span>
+          </div>
+          <p class="math-desc">
+            Jarak antara setiap alternatif dengan solusi ideal positif (D_i^+) dan solusi ideal negatif (D_i^-) dihitung
+            menggunakan rumus jarak Euclidean berdimensi-n:
+          </p>
+          <div class="math-formula">
+            D_i^+ = √( ∑_{j=1}^n (y_ij - y_j^+)^2 )<br><br>
+            D_i^- = √( ∑_{j=1}^n (y_ij - y_j^-)^2 )
+          </div>
+        </div>
+
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Langkah 5: Nilai Preferensi Relatif (V_i) &amp; Perangkingan</span>
+            <span class="meta-chip">Rasio Kedekatan Relatif</span>
+          </div>
+          <p class="math-desc">
+            Nilai preferensi V_i menunjukkan kedekatan relatif suatu alternatif terhadap solusi ideal:
+          </p>
+          <div class="math-formula">
+            V_i = D_i^- / ( D_i^+ + D_i^- )
+          </div>
+          <p class="math-desc">
+            Rentang nilai V_i berada di antara 0 dan 1. Nilai V_i yang mendekati 1 menandakan alternatif memiliki
+            kualitas yang sangat dekat dengan kondisi ideal positif dan jauh dari kondisi negatif. Alternatif dengan
+            nilai V_i tertinggi dipilih sebagai alternatif terbaik (Peringkat 1).
+          </p>
+        </div>
+
+        <!-- BEDAH LENGKAP KASUS LAPTOP -->
+        <div class="theory-chapter" style="margin-top:2rem; border-color:var(--chalk-white);">
+          <div
+            style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem; margin-bottom:1rem; border-bottom:1px solid var(--chalk-border); padding-bottom:0.75rem;">
+            <div>
+              <span class="meta-chip" style="background-color:var(--chalk-white); color:#000; font-weight:700;">STUDI
+                KASUS STANDAR</span>
+              <h2 class="theory-title" style="margin-top:0.5rem; margin-bottom:0.25rem;">Bedah Lengkap Kasus Pemilihan Laptop
+                (Langkah 0 s/d 6 Komputasi Manual)</h2>
+              <p style="font-size:0.8125rem; color:var(--chalk-secondary);">Berikut adalah simulasi bertahap lengkap
+                perhitungan manual komprehensif metode TOPSIS standar.</p>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm" id="btn-load-laptop-case">
+              <span class="material-symbols-outlined" style="font-size:16px;">upload</span>
+              Terapkan Kasus Ini ke Kalkulator
+            </button>
+          </div>
+
+          <!-- Data Awal -->
+          <div class="math-card">
+            <strong style="color:var(--chalk-white); font-size:0.875rem;">Data Awal (Langkah 0): Kriteria &amp; Matriks
+              Keputusan</strong>
+            <p class="math-desc" style="margin-top:0.25rem;">
+              Bobot Kriteria: Harga = 0,4 (Cost), RAM = 0,3 (Benefit), Baterai = 0,3 (Benefit). Total bobot = 1,00.<br>
+              Nilai Alternatif:
+            </p>
+            <table class="blackboard-table" style="margin-top:0.5rem;">
+              <thead>
+                <tr>
+                  <th>Alternatif</th>
+                  <th class="text-right">Harga (Juta) [Cost]</th>
+                  <th class="text-right">RAM (GB) [Benefit]</th>
+                  <th class="text-right">Baterai (Jam) [Benefit]</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>A1</td>
+                  <td class="text-right">8</td>
+                  <td class="text-right">8</td>
+                  <td class="text-right">10</td>
+                </tr>
+                <tr>
+                  <td>A2</td>
+                  <td class="text-right">12</td>
+                  <td class="text-right">16</td>
+                  <td class="text-right">8</td>
+                </tr>
+                <tr>
+                  <td>A3</td>
+                  <td class="text-right">10</td>
+                  <td class="text-right">16</td>
+                  <td class="text-right">12</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Langkah 1 -->
+          <div class="math-card">
+            <strong style="color:var(--chalk-white); font-size:0.875rem;">Langkah 1: Normalisasi Vektor (r_ij = x_ij ÷
+              pembagi)</strong>
+            <div class="math-formula" style="font-size:0.8125rem;">
+              • Pembagi Harga: √(8² + 12² + 10²) = √(64 + 144 + 100) = √308 = 17,5499<br>
+              A1 = 8 ÷ 17,5499 = 0,4558 | A2 = 12 ÷ 17,5499 = 0,6838 | A3 = 10 ÷ 17,5499 = 0,5698<br><br>
+              • Pembagi RAM: √(8² + 16² + 16²) = √(64 + 256 + 256) = √576 = 24,0000<br>
+              A1 = 8 ÷ 24 = 0,3333 | A2 = 16 ÷ 24 = 0,6667 | A3 = 16 ÷ 24 = 0,6667<br><br>
+              • Pembagi Baterai: √(10² + 8² + 12²) = √(100 + 64 + 144) = √308 = 17,5499<br>
+              A1 = 10 ÷ 17,5499 = 0,5698 | A2 = 8 ÷ 17,5499 = 0,4558 | A3 = 12 ÷ 17,5499 = 0,6838
+            </div>
+          </div>
+
+          <!-- Langkah 2 -->
+          <div class="math-card">
+            <strong style="color:var(--chalk-white); font-size:0.875rem;">Langkah 2: Normalisasi Terbobot (Y = w_j ×
+              r_ij)</strong>
+            <table class="blackboard-table" style="margin-top:0.5rem;">
+              <thead>
+                <tr>
+                  <th>Alternatif</th>
+                  <th class="text-right">Harga (× 0,4)</th>
+                  <th class="text-right">RAM (× 0,3)</th>
+                  <th class="text-right">Baterai (× 0,3)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>A1</td>
+                  <td class="text-right">0,1823</td>
+                  <td class="text-right">0,1000</td>
+                  <td class="text-right">0,1709</td>
+                </tr>
+                <tr>
+                  <td>A2</td>
+                  <td class="text-right">0,2735</td>
+                  <td class="text-right">0,2000</td>
+                  <td class="text-right">0,1367</td>
+                </tr>
+                <tr>
+                  <td>A3</td>
+                  <td class="text-right">0,2279</td>
+                  <td class="text-right">0,2000</td>
+                  <td class="text-right">0,2051</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Langkah 3 & 4 -->
+          <div class="math-card">
+            <strong style="color:var(--chalk-white); font-size:0.875rem;">Langkah 3 &amp; 4: Solusi Ideal &amp; Jarak
+              Euclidean (D+, D-)</strong>
+            <div class="formula-display-box" style="margin-top:0.5rem;">
+              <strong>Solusi Ideal Positif (A+):</strong> Harga min=0,1823 | RAM max=0,2000 | Baterai max=0,2051<br>
+              <strong>Solusi Ideal Negatif (A-):</strong> Harga max=0,2735 | RAM min=0,1000 | Baterai min=0,1367<br><br>
+              <strong>Hasil Jarak Euclidean:</strong><br>
+              • A1: D+ = 0,1057 | D- = 0,0974<br>
+              • A2: D+ = 0,1140 | D- = 0,1000<br>
+              • A3: D+ = 0,0456 | D- = 0,1295
+            </div>
+          </div>
+
+          <!-- Langkah 5 & 6 -->
+          <div class="math-card">
+            <strong style="color:var(--chalk-white); font-size:0.875rem;">Langkah 5 &amp; 6: Nilai Preferensi (V) &amp;
+              Perangkingan Akhir</strong>
+            <div class="math-formula">
+              • A1: V = 0,0974 ÷ (0,0974 + 0,1057) = 0,0974 ÷ 0,2031 = 0,4796 (Rank 2)<br>
+              • A2: V = 0,1000 ÷ (0,1000 + 0,1140) = 0,1000 ÷ 0,2140 = 0,4673 (Rank 3)<br>
+              • A3: V = 0,1295 ÷ (0,1295 + 0,0456) = 0,1295 ÷ 0,1751 = 0,7395 (Rank 1 Juara)
+            </div>
+
+            <div class="insight-box" style="margin-top:0.75rem;">
+              <div class="insight-header">
+                <span class="material-symbols-outlined">lightbulb</span>
+                Mengapa Hasilnya Masuk Akal? (Analisis Logika Keputusan)
+              </div>
+              <ul class="insight-list">
+                <li><strong>A1</strong> murah, tetapi RAM kecil (8 GB), jadi jauh dari ideal di kriteria RAM.</li>
+                <li><strong>A2</strong> paling mahal (12 juta) dan baterainya paling pendek (8 jam), sehingga mendekati
+                  kondisi terburuk di dua kriteria.</li>
+                <li><strong>A3</strong> hanya "kalah" sedikit di harga (10 juta vs 8 juta), namun memiliki RAM besar (16
+                  GB) dan baterai paling awet (12 jam), sehingga jaraknya ke solusi ideal positif paling kecil.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:2rem; display:flex; justify-content:center;">
+          <button type="button" class="btn btn-primary" id="btn-back-to-calc">
+            <span class="material-symbols-outlined" style="font-size:18px;">arrow_back</span>
+            Kembali ke Kalkulator &amp; Coba Data
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: RIWAYAT PERHITUNGAN -->
+    <!-- ========================================== -->
+    <div id="tab-riwayat" class="tab-pane" style="display:none;">
+
+      <section class="academic-hero">
+        <div class="hero-meta">
+          <span class="meta-chip">Arsip Komputasi Lokal</span>
+          <span>//</span>
+          <span>Penyimpanan Peramban (Local Storage)</span>
+        </div>
+        <div class="hero-main">
+          <div class="hero-title-group">
+            <h1>Riwayat Perhitungan TOPSIS</h1>
+            <p class="hero-subtitle">
+              Sesi kalkulasi tersimpan secara aman di peramban Anda. Anda dapat membuka kembali matriks data terdahulu
+              atau mengosongkan riwayat kapan pun.
+            </p>
+          </div>
+          <div class="hero-toolbar">
+            <button type="button" class="btn btn-secondary" id="btn-save-current-modal">
+              <span class="material-symbols-outlined" style="font-size:16px;">bookmark_add</span>
+              Simpan Sesi Saat Ini
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" id="btn-clear-history">
+              <span class="material-symbols-outlined" style="font-size:16px;">delete_sweep</span>
+              Bersihkan Riwayat
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">ARSIP</span>
+            <h2 class="section-title-text">Daftar Sesi Perhitungan Tersimpan</h2>
+          </div>
+          <span id="history-count-badge" class="meta-chip">0 Sesi</span>
+        </div>
+        <div class="section-body" id="history-list-container">
+          <!-- Injected by JavaScript -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- TAB 4: EKSPOR HASIL -->
+    <!-- ========================================== -->
+    <div id="tab-ekspor" class="tab-pane" style="display:none;">
+
+      <section class="academic-hero">
+        <div class="hero-meta">
+          <span class="meta-chip">Diseminasi &amp; Pelaporan</span>
+          <span>//</span>
+          <span>Ekspor Data Akademis</span>
+        </div>
+        <div class="hero-title-group">
+          <h1>Ekspor Hasil &amp; Laporan Keputusan</h1>
+          <p class="hero-subtitle">
+            Unduh data matriks keputusan dan hasil perangkingan dalam format CSV, JSON, atau salin ringkasan teks
+            terstruktur untuk kebutuhan dokumentasi teknis, audit keputusan, maupun pelaporan profesional.
+          </p>
+        </div>
+      </section>
+
+      <div class="export-grid">
+
+        <!-- Export CSV Card -->
+        <div class="export-card">
+          <div>
+            <div style="font-size:0.75rem; color:var(--chalk-secondary); text-transform:uppercase;">Format Tabular</div>
+            <h3>Ekspor Berkas CSV</h3>
+            <p>Unduh data dalam format CSV standar yang dapat langsung dibuka dengan Microsoft Excel, Google Sheets,
+              atau perangkat lunak statistika.</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <button type="button" class="btn btn-primary" id="btn-export-csv-rank">
+              <span class="material-symbols-outlined" style="font-size:16px;">table_chart</span>
+              Unduh CSV: Hasil Rangking Akhir
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-export-csv-matrix">
+              <span class="material-symbols-outlined" style="font-size:16px;">grid_on</span>
+              Unduh CSV: Matriks Keputusan (X)
+            </button>
+            <button type="button" class="btn btn-secondary" id="btn-export-csv-norm">
+              <span class="material-symbols-outlined" style="font-size:16px;">calculate</span>
+              Unduh CSV: Matriks Terbobot (Y)
+            </button>
+          </div>
+        </div>
+
+        <!-- Export JSON Card -->
+        <div class="export-card">
+          <div>
+            <div style="font-size:0.75rem; color:var(--chalk-secondary); text-transform:uppercase;">Format Proyek Utuh
+            </div>
+            <h3>Cadangan Proyek JSON</h3>
+            <p>Simpan seluruh konfigurasi kriteria, bobot, dan matriks alternatif ke berkas JSON agar dapat diimpor
+              kembali di kemudian hari.</p>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <button type="button" class="btn btn-primary" id="btn-export-json">
+              <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+              Unduh Berkas Proyek JSON
+            </button>
+            <button type="button" class="btn btn-outline" id="btn-open-import-modal">
+              <span class="material-symbols-outlined" style="font-size:16px;">upload</span>
+              Impor Proyek dari JSON
+            </button>
+          </div>
+        </div>
+
+        <!-- Print & PDF Card -->
+        <div class="export-card">
+          <div>
+            <div style="font-size:0.75rem; color:var(--chalk-secondary); text-transform:uppercase;">Dokumen Cetak</div>
+            <h3>Cetak / Simpan PDF</h3>
+            <p>Cetak lembar kalkulasi dengan tata letak resmi monokrom akademis berlatar putih bersih (clean white paper
+              style) siap diarsipkan.</p>
+          </div>
+          <div>
+            <button type="button" class="btn btn-primary" id="btn-print-report" style="width:100%;">
+              <span class="material-symbols-outlined" style="font-size:16px;">print</span>
+              Cetak Laporan / Simpan PDF
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Text / Markdown Summary Card -->
+      <section class="section-block" style="margin-top:2rem;">
+        <div class="section-header">
+          <div class="section-header-title">
+            <span class="section-number">SALIN</span>
+            <h2 class="section-title-text">Ringkasan Teks &amp; Notasi Formal</h2>
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-copy-summary">
+            <span class="material-symbols-outlined" style="font-size:16px;">content_copy</span>
+            Salin ke Clipboard
+          </button>
+        </div>
+        <div class="section-body">
+          <textarea id="summary-text-preview" class="preview-textarea" readonly
+            aria-label="Pratinjau Ringkasan Teks"></textarea>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL DIALOGS -->
+  <!-- ========================================== -->
+
+  <!-- Modal: Konfirmasi Penghapus / Reset -->
+  <div class="modal-overlay" id="modal-reset" role="dialog" aria-modal="true" aria-labelledby="modal-reset-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-reset-title">Konfirmasi Bersihkan Papan Tulis</h3>
+        <button type="button" class="btn btn-outline btn-sm modal-close-btn" data-close-modal="modal-reset"
+          aria-label="Tutup">
+          <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+        </button>
+      </div>
+      <div>
+        <p style="font-size:0.875rem; color:var(--chalk-secondary); margin-bottom:1rem;">
+          Apakah Anda yakin ingin menghapus seluruh kriteria dan alternatif yang ada di papan tulis? Tindakan ini akan
+          mengembalikan data ke kondisi matriks dasar 2x2.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-reset">Batal</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-reset">Ya, Bersihkan Papan Tulis</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Simpan Sesi Riwayat -->
+  <div class="modal-overlay" id="modal-save-history" role="dialog" aria-modal="true" aria-labelledby="modal-save-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-save-title">Simpan Sesi Perhitungan</h3>
+        <button type="button" class="btn btn-outline btn-sm modal-close-btn" data-close-modal="modal-save-history"
+          aria-label="Tutup">
+          <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+        </button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <label for="history-session-title"
+          style="font-size:0.75rem; color:var(--chalk-secondary); text-transform:uppercase;">Judul Sesi / Catatan
+          Kasus</label>
+        <input type="text" id="history-session-title" class="input-field"
+          placeholder="Contoh: Seleksi Vendor Pengadaan Q3 2026">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-save-history">Batal</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm-save-history">Simpan ke Riwayat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Impor JSON -->
+  <div class="modal-overlay" id="modal-import" role="dialog" aria-modal="true" aria-labelledby="modal-import-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-import-title">Impor Data Proyek TOPSIS</h3>
+        <button type="button" class="btn btn-outline btn-sm modal-close-btn" data-close-modal="modal-import"
+          aria-label="Tutup">
+          <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+        </button>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1rem;">
+        <p style="font-size:0.8125rem; color:var(--chalk-secondary);">Pilih berkas JSON proyek TOPSIS atau tempelkan
+          kode JSON di bawah:</p>
+        <input type="file" id="json-file-input" accept=".json" class="input-field" style="padding:0.5rem;"
+          aria-label="Pilih Berkas JSON">
+        <textarea id="json-paste-area" class="preview-textarea" placeholder="Atau tempelkan kode JSON di sini..."
+          style="height:120px;" aria-label="Tempel Kode JSON"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-close-modal="modal-import">Batal</button>
+        <button type="button" class="btn btn-primary" id="btn-confirm-import">Impor Proyek</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Panduan Cepat -->
+  <div class="modal-overlay" id="modal-help" role="dialog" aria-modal="true" aria-labelledby="modal-help-title">
+    <div class="modal-box" style="max-width:680px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-help-title">Panduan Penggunaan Kalkulator TOPSIS</h3>
+        <button type="button" class="btn btn-outline btn-sm modal-close-btn" data-close-modal="modal-help"
+          aria-label="Tutup">
+          <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+        </button>
+      </div>
+      <div
+        style="display:flex; flex-direction:column; gap:1rem; font-size:0.8125rem; line-height:1.6; max-height:60vh; overflow-y:auto; padding-right:0.5rem;">
+        <div>
+          <strong style="color:var(--chalk-white);">1. Kalibrasi Kriteria (Tahap 1)</strong>
+          <p style="color:var(--chalk-secondary);">Masukkan nama kriteria dan bobot kepentingannya. Pastikan memilih
+            jenis yang tepat: <strong>Benefit</strong> (makin besar makin baik) atau <strong>Cost</strong> (makin kecil
+            makin baik). Tekan tombol <em>Normalisasi Bobot</em> untuk memastikan total W = 1.00.</p>
+        </div>
+        <div>
+          <strong style="color:var(--chalk-white);">2. Matriks Alternatif (Tahap 2)</strong>
+          <p style="color:var(--chalk-secondary);">Tentukan nama setiap kandidat / alternatif dan masukkan nilai riil
+            pada masing-masing sel kriteria. Anda dapat menambah kriteria atau alternatif tanpa batas sesuai kebutuhan.
+          </p>
+        </div>
+        <div>
+          <strong style="color:var(--chalk-white);">3. Hasil Perangkingan &amp; Analisis (Tahap 3)</strong>
+          <p style="color:var(--chalk-secondary);">Peringkat 1 (Juara) ditentukan dari nilai preferensi <strong>V
+              tertinggi (mendekati 1.0)</strong>. Anda juga dapat menggunakan tuas <em>Simulasi Sensitivitas</em> untuk
+            melihat dampak perubahan bobot secara interaktif.</p>
+        </div>
+        <div>
+          <strong style="color:var(--chalk-white);">4. Penjelasan Rumus &amp; Ekspor</strong>
+          <p style="color:var(--chalk-secondary);">Kunjungi tab <em>Penjelasan &amp; Rumus Langkah</em> untuk audit
+            rumus formal, atau tab <em>Ekspor Hasil</em> untuk mengunduh laporan CSV, JSON, cetak PDF, atau menyalin
+            ringkasan teks.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-close-modal="modal-help">Tutup Panduan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Panduan Lengkap Bobot TOPSIS -->
+  <div class="modal-overlay" id="modal-weight-presentation" role="dialog" aria-modal="true"
+    aria-labelledby="modal-weight-title">
+    <div class="modal-box" style="max-width:840px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-weight-title">Panduan Komprehensif: Aturan &amp; Penanganan Bobot TOPSIS (Total
+          Bobot ≠ 1)</h3>
+        <button type="button" class="btn btn-outline btn-sm modal-close-btn"
+          data-close-modal="modal-weight-presentation" aria-label="Tutup">
+          <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+        </button>
+      </div>
+      <div
+        style="display:flex; flex-direction:column; gap:1.25rem; font-size:0.8125rem; line-height:1.6; max-height:65vh; overflow-y:auto; padding-right:0.75rem;">
+
+        <!-- Bagian 1 & 2: Pengertian & Aturan Baku Bobot -->
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Prinsip 1: Pengertian &amp; Aturan Baku Bobot</span>
+            <span class="meta-chip">Aturan ∑ w_j = 1</span>
+          </div>
+          <p class="math-desc">
+            "Bobot adalah angka yang menunjukkan seberapa penting sebuah kriteria dibandingkan kriteria lainnya. Semakin
+            besar bobot, semakin besar pengaruh kriteria itu terhadap hasil akhir."
+          </p>
+          <div class="formula-display-box" style="margin-top:0.5rem;">
+            <strong>Tiga Aturan Utama Bobot:</strong><br>
+            1. Setiap kriteria memiliki tepat satu bobot.<br>
+            2. Nilai bobot berada di antara 0 dan 1 (0 &lt; w_j &lt; 1).<br>
+            3. Total seluruh bobot harus sama dengan 1: <strong>∑ w_j = 1</strong> (Contoh: 0,4 + 0,3 + 0,3 = 1).<br>
+            <em>Syarat ini adalah ketentuan standar agar bobot dapat dibaca langsung sebagai persentase kepentingan
+              (misal 0,4 berarti 40%).</em>
+          </div>
+        </div>
+
+        <!-- Metode 100 Poin -->
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Metode Penentuan Bobot (Skala 100 Poin)</span>
+            <span class="meta-chip">Mudah &amp; Praktis</span>
+          </div>
+          <p class="math-desc">
+            "Cara paling mudah adalah membagikan 100 poin kepada seluruh kriteria sesuai tingkat kepentingannya, lalu
+            setiap poin dibagi 100."
+          </p>
+          <table class="blackboard-table" style="margin-top:0.5rem;">
+            <thead>
+              <tr>
+                <th>Kriteria</th>
+                <th>Jenis</th>
+                <th class="text-right">Poin</th>
+                <th class="text-right">Bobot (Poin ÷ 100)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Harga</td>
+                <td>Cost</td>
+                <td class="text-right">40</td>
+                <td class="text-right">0,40</td>
+              </tr>
+              <tr>
+                <td>RAM</td>
+                <td>Benefit</td>
+                <td class="text-right">30</td>
+                <td class="text-right">0,30</td>
+              </tr>
+              <tr>
+                <td>Baterai</td>
+                <td>Benefit</td>
+                <td class="text-right">30</td>
+                <td class="text-right">0,30</td>
+              </tr>
+              <tr style="font-weight:700; background-color:rgba(255,255,255,0.05);">
+                <td colspan="2">Total</td>
+                <td class="text-right">100</td>
+                <td class="text-right">1,00 ✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Penanganan Total Bobot ≠ 1 -->
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Metode Normalisasi: Penanganan Total Bobot ≠ 1</span>
+            <span class="meta-chip">Rumus: w_j' = w_j / ∑w_j</span>
+          </div>
+          <p class="math-desc">
+            "Setelah bobot ditentukan, total harus diperiksa. Jika hasilnya belum tepat 1, gunakan rumus normalisasi
+            bobot:"
+          </p>
+          <div class="math-formula">
+            w_j' = w_j ÷ ∑ w_j (Artinya: bobot lama dibagi total seluruh bobot lama)
+          </div>
+
+          <div
+            style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin-top:0.75rem;">
+            <div>
+              <strong style="color:var(--chalk-white);">Kasus A: Total LEBIH dari 1 (Contoh: Total = 1,2)</strong>
+              <table class="blackboard-table" style="margin-top:0.25rem;">
+                <thead>
+                  <tr>
+                    <th>Kriteria</th>
+                    <th class="text-right">Lama</th>
+                    <th class="text-right">Dibagi Total</th>
+                    <th class="text-right">Baru</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Harga</td>
+                    <td class="text-right">0,5</td>
+                    <td class="text-right">0,5 ÷ 1,2</td>
+                    <td class="text-right">0,417</td>
+                  </tr>
+                  <tr>
+                    <td>RAM</td>
+                    <td class="text-right">0,4</td>
+                    <td class="text-right">0,4 ÷ 1,2</td>
+                    <td class="text-right">0,333</td>
+                  </tr>
+                  <tr>
+                    <td>Baterai</td>
+                    <td class="text-right">0,3</td>
+                    <td class="text-right">0,3 ÷ 1,2</td>
+                    <td class="text-right">0,250</td>
+                  </tr>
+                  <tr style="font-weight:700;">
+                    <td>Total</td>
+                    <td class="text-right">1,2</td>
+                    <td></td>
+                    <td class="text-right">1,000 ✓</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <strong style="color:var(--chalk-white);">Kasus B: Total KURANG dari 1 (Contoh: Total = 0,8)</strong>
+              <table class="blackboard-table" style="margin-top:0.25rem;">
+                <thead>
+                  <tr>
+                    <th>Kriteria</th>
+                    <th class="text-right">Lama</th>
+                    <th class="text-right">Dibagi Total</th>
+                    <th class="text-right">Baru</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Harga</td>
+                    <td class="text-right">0,3</td>
+                    <td class="text-right">0,3 ÷ 0,8</td>
+                    <td class="text-right">0,375</td>
+                  </tr>
+                  <tr>
+                    <td>RAM</td>
+                    <td class="text-right">0,2</td>
+                    <td class="text-right">0,2 ÷ 0,8</td>
+                    <td class="text-right">0,250</td>
+                  </tr>
+                  <tr>
+                    <td>Baterai</td>
+                    <td class="text-right">0,3</td>
+                    <td class="text-right">0,3 ÷ 0,8</td>
+                    <td class="text-right">0,375</td>
+                  </tr>
+                  <tr style="font-weight:700;">
+                    <td>Total</td>
+                    <td class="text-right">0,8</td>
+                    <td></td>
+                    <td class="text-right">1,000 ✓</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="math-desc" style="margin-top:0.75rem;">
+            <em>Prinsip: Kalau total lebih dari 1, nilai bobot mengecil. Kalau total kurang dari 1, nilai bobot membesar
+              secara proporsional.</em>
+          </p>
+        </div>
+
+        <!-- Invariansi Geometris -->
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Karakteristik Matematis: Invariansi Skala Bobot</span>
+            <span class="meta-chip">Invariansi Geometris</span>
+          </div>
+          <p class="math-desc">
+            "Menariknya, jika seluruh bobot dikalikan angka yang sama, urutan ranking tidak berubah karena yang
+            menentukan adalah perbandingan antar bobot. Namun tetap harus dinormalisasi agar sesuai standar dan terbaca
+            sebagai persentase."
+          </p>
+          <div class="formula-display-box" style="margin-top:0.5rem;">
+            <strong>Bukti Singkat Kasus Laptop (A3):</strong><br>
+            • Bobot normal (∑W = 1): V = 0,7395 (Juara 1)<br>
+            • Bobot dikali 2 (∑W = 2): V = 0,7395 (Tetap Juara 1, Hasil Sama Persis).
+          </div>
+        </div>
+
+        <!-- Tanya Jawab -->
+        <div class="math-card">
+          <div class="math-card-header">
+            <span class="math-title">Pertanyaan Umum (FAQ) &amp; Kaidah Bobot</span>
+            <span class="meta-chip">Tanya Jawab</span>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:0.5rem;">
+            <div>
+              <strong>T: Kenapa total bobot harus 1?</strong><br>
+              <span style="color:var(--chalk-secondary);">J: "Merupakan ketentuan standar agar bobot terbaca langsung
+                sebagai persentase tingkat kepentingan."</span>
+            </div>
+            <div>
+              <strong>T: Bagaimana kalau pembuat keputusan memasukkan total 1,2 atau 0,8?</strong><br>
+              <span style="color:var(--chalk-secondary);">J: "Dinormalisasi dengan membagi setiap bobot dengan totalnya
+                (w_j ÷ ∑w)."</span>
+            </div>
+            <div>
+              <strong>T: Apakah normalisasi bobot mengubah ranking?</strong><br>
+              <span style="color:var(--chalk-secondary);">J: "Tidak, karena perbandingan rasio kepentingan antar
+                kriteria tetap terjaga sama."</span>
+            </div>
+            <div>
+              <strong>T: Apakah ada cara penentuan bobot yang lebih ilmiah?</strong><br>
+              <span style="color:var(--chalk-secondary);">J: "Ada, misalnya metode AHP (Analytic Hierarchy Process)
+                dengan perbandingan berpasangan, atau metode Entropy yang mengekstraksi bobot dari data."</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-close-modal="modal-weight-presentation">Tutup Panduan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>TOPSIS DECISION THEOREM</strong> © Papan Tulis Analitik // Multi-Criteria Decision Analysis
+      </div>
+      <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+        <span>Varian: Vektor Normalisasi Euclidean</span>
+        <span>Ruang Geometris: Matriks [A+ / A-]</span>
+        <span>Sistem: Bebas Slop &amp; Presisi Nol-Radius</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Application -->
+  <script src="app.js"></script>
+</body>
+
+</html>
